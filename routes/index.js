@@ -19,9 +19,8 @@ router.get("/test", (req, res, next) => {
 router.post("/url/add", async (req, res, next) => {
     let validation = joi.urlAdd(req.body);
     if (validation.error == null) {
-        // utils.resSuccess(res, { message: "Yes!" });
         const { originalUrl } = req.body;
-        const addUrl = await urlControllers.addUrl({ originalUrl })
+        const addUrl = await urlControllers.addUrl({ originalUrl });
         const { success, message } = addUrl;
         if (success) {
             const { shortUrlCode } = addUrl;
@@ -36,12 +35,17 @@ router.post("/url/add", async (req, res, next) => {
     }
 });
 
-router.post("/url/get", (req, res, next) => {
-    utils.resSuccess(res, { message: "Server is up and running!" });
-});
+router.get("/url/go/:shortUrlCode", async (req, res, next) => {
+    const { shortUrlCode } = req.params;
+    const getUrl = await urlControllers.getUrl({ shortUrlCode });
+    const { success, message, originalUrl } = getUrl;
+    if (success) {
+        utils.resSuccess(res, { message, originalUrl });
+    }
+    else{
+        utils.resError(res, { message, originalUrl });
+    }
 
-router.get("/goto/:urlCode", (req, res, next) => {
-    utils.resSuccess(res, { message: "Server is up and running!" });
 });
 
 module.exports = function (app) {

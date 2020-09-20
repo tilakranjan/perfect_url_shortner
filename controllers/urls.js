@@ -33,5 +33,18 @@ module.exports = {
         const newUrl = new mongoose.models["Urls"]({ originalUrl, shortUrlCode });
         await newUrl.save();
         return { success: true, message: "Url added successfully.", shortUrlCode };
+    },
+
+    getUrl: async (doc) => {
+        const { shortUrlCode } = doc;
+        const getUrl = await urlModel.find({ shortUrlCode });
+        
+        // check if url exists
+        if (getUrl.length) {
+            return { success: true, message: "Url found.", originalUrl: getUrl[0].originalUrl }
+        }
+        else{
+            return { success: false, message: "Url not found.", originalUrl: null }
+        }
     }
 }
