@@ -21,7 +21,7 @@ mongoose.connect(congif.dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-// CONNECTION EVENTS
+// MONGO CONNECTION EVENTS
 // When successfully connected
 mongoose.connection.on('connected', function () {
     utils.logInfo('MongoDB connection open to ' + congif.dbUrl);

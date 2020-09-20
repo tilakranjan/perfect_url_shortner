@@ -45,7 +45,6 @@ router.get("/url/go/:shortUrlCode", async (req, res, next) => {
     else{
         utils.resError(res, { message, originalUrl });
     }
-
 });
 
 module.exports = function (app) {
